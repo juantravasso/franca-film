@@ -26,7 +26,7 @@ export const footer: Footer = {
       id: 2,
       type: "instagram",
       label: "@opaulofranca_",
-      href: "https://www.instagram.com/opaulofranca/",
+      href: "https://www.instagram.com/opaulofranca_/",
     },
     {
       id: 3,

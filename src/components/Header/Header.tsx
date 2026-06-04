@@ -3,28 +3,33 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { FaInstagram, FaWhatsapp } from "react-icons/fa";
 
-import logoFrancaFilm from "../../../src/assets/logoFrancafilm.jpeg";
+import logoFrancaFilm from "../../../src/assets/logoFrancafilm.png";
 
 import { Box } from "@/src/components/Box/Box";
 import { Text } from "@/src/components/Text/Text";
 
 const navItems = [
-  { label: "Início", href: "#inicio", id: "inicio" },
-  { label: "Trabalhos", href: "#trabalhos", id: "trabalhos" },
-  { label: "Fotos", href: "#fotos", id: "fotos" },
-  { label: "Vídeos", href: "#videos", id: "videos" },
-  { label: "Sobre", href: "#sobre", id: "sobre" },
-  { label: "Contato", href: "#contato", id: "contato" },
+  { label: "Início", href: "/#inicio", id: "inicio" },
+  { label: "Trabalhos", href: "/WorkPage", id: "WorkPage" },
+  { label: "Fotos", href: "/PhotosPage", id: "PhotosPage" },
+  { label: "Vídeos", href: "/VideosPage", id: "VideosPage" },
+  { label: "Sobre", href: "/#sobre", id: "sobre" },
+  { label: "Contato", href: "/#contato", id: "contato" },
 ];
 
 export function Header() {
+  const pathname = usePathname();
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("inicio");
 
   useEffect(() => {
+    if (pathname !== "/") return;
+
     const sections = document.querySelectorAll("section[id]");
 
     const observer = new IntersectionObserver(
@@ -44,12 +49,20 @@ export function Header() {
     sections.forEach((section) => observer.observe(section));
 
     return () => observer.disconnect();
-  }, []);
+  }, [pathname]);
+
+  function isItemActive(item: (typeof navItems)[number]) {
+  if (pathname !== "/") {
+    return pathname === item.href;
+  }
+
+  return item.id === activeSection;
+}
 
   return (
     <header className="fixed left-0 top-0 z-50 w-full border-b border-white/20 bg-transparent">
       <Box className="flex h-24 w-full items-center justify-between px-5 md:px-10 lg:px-16">
-        <Link href="#inicio" onClick={() => setMenuOpen(false)}>
+        <Link href="/#inicio" onClick={() => setMenuOpen(false)}>
           <Image
             src={logoFrancaFilm}
             alt="Franca Film"
@@ -62,7 +75,7 @@ export function Header() {
 
         <nav className="hidden items-center gap-8 md:flex lg:gap-10">
           {navItems.map((item) => {
-            const isActive = activeSection === item.id;
+            const isActive = isItemActive(item);
 
             return (
               <Link key={item.id} href={item.href} className="group relative">
@@ -100,7 +113,7 @@ export function Header() {
           </a>
 
           <a
-            href="https://www.instagram.com/opaulofranca/"
+            href="https://www.instagram.com/opaulofranca_/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"
@@ -123,7 +136,7 @@ export function Header() {
       {menuOpen && (
         <nav className="absolute left-0 top-24 z-50 flex w-full flex-col gap-6 border-t border-white/10 bg-background/95 px-6 py-8 shadow-xl backdrop-blur-xl md:hidden">
           {navItems.map((item) => {
-            const isActive = activeSection === item.id;
+            const isActive = isItemActive(item);
 
             return (
               <Link
