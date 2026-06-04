@@ -40,7 +40,7 @@ export function MediaSection() {
             <Button
             className="mt-5" 
             title="Ver Todos os Vídeos"
-            href="/videos"
+            href="/VideosPage"
           />
           </div>
 
@@ -79,7 +79,7 @@ export function MediaSection() {
             <Button
               className="mt-5"
               title="Ver Todas as Fotos"
-              href="/fotos"
+              href="/PhotosPage"
             />
           </div>
 

@@ -7,6 +7,7 @@ import { Text } from "@/src/components/Text/Text";
 import { WorkCard } from "@/src/components/WorkCard/WorkCard";
 import { works } from "@/src/data/work";
 import { WorkModal } from "@/src/components/WorkCard/components/WorkCardModal";
+import { Button } from "@/src/components/Button/Button";
 
 
 export function Works() {
@@ -34,6 +35,13 @@ export function Works() {
             Cada evento tem sua essência, cada história merece ser contada.<br/>
             Confira alguns dos trabalhos realizados.
           </Text>
+
+          <Box className="mt-5 flex justify-center">
+          <Button
+            title="Ver mais trabalhos"
+            href="/WorkPage"
+          />
+        </Box>
         </div>
 
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 md:gap-4 lg:grid-cols-3 xl:grid-cols-6">
@@ -47,6 +55,7 @@ export function Works() {
             />
           ))}
         </div>
+
       </Box>
 
       <WorkModal work={selectedWork} onClose={() => setSelectedWork(null)} />
