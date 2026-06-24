@@ -7,4 +7,5 @@ export interface MediaItem {
   image: string;
   type: MediaType;
   duration?: string;
+  video?: string;
 }

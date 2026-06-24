@@ -8,21 +8,17 @@ import { WorkCard } from "@/src/components/WorkCard/WorkCard";
 import { works } from "@/src/data/work";
 import { WorkModal } from "@/src/components/WorkCard/components/WorkCardModal";
 import { Button } from "@/src/components/Button/Button";
-
+import { useRevealAnimation } from "@/src/hooks/useRevealAnimation";
 
 export function Works() {
   const [selectedWork, setSelectedWork] = useState<Work | null>(null);
 
-  return (
-    <section
-    id="trabalhos"
-    className="
-        bg-surface
-        py-20
-        md:py-28
-    "
->
+  useRevealAnimation({
+    selector: ".work-item",
+  });
 
+  return (
+    <section id="trabalhos" className="bg-surface py-20 md:py-28">
       <Box className="relative z-10 px-5 md:px-10 lg:px-16">
         <div className="mx-auto mb-12 max-w-2xl text-center">
           <Text as="h2" preset="sectionTitle" bold className="uppercase">
@@ -32,30 +28,32 @@ export function Works() {
           <div className="mx-auto mt-4 h-[2px] w-10 bg-primary" />
 
           <Text preset="body" className="mt-5">
-            Cada evento tem sua essência, cada história merece ser contada.<br/>
+            Cada evento tem sua essência, cada história merece ser contada.
+            <br />
             Confira alguns dos trabalhos realizados.
           </Text>
 
           <Box className="mt-5 flex justify-center">
-          <Button
-            title="Ver mais trabalhos"
-            href="/WorkPage"
-          />
-        </Box>
+            <Button title="Ver mais trabalhos" href="/WorkPage" />
+          </Box>
         </div>
 
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 md:gap-4 lg:grid-cols-3 xl:grid-cols-6">
           {works.map((work) => (
-            <WorkCard
+            <div
               key={work.id}
-              title={work.title}
-              projects={work.projects}
-              image={work.image}
-              onClick={() => setSelectedWork(work)}
-            />
+              className="work-item opacity-0 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.03]"
+              style={{ filter: "blur(14px)" }}
+            >
+              <WorkCard
+                title={work.title}
+                projects={work.projects}
+                image={work.image}
+                onClick={() => setSelectedWork(work)}
+              />
+            </div>
           ))}
         </div>
-
       </Box>
 
       <WorkModal work={selectedWork} onClose={() => setSelectedWork(null)} />

@@ -6,6 +6,7 @@ export const videos: MediaItem[] = [
     title: "Video 1",
     subtitle: "Descrição do vídeo 1",
     image: "/images/video-1.jpg",
+    video: "/videos/videoteste.mp4",
     type: "video",
     duration: "02:15",
   },

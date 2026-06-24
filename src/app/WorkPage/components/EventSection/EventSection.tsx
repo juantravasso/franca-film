@@ -10,6 +10,7 @@ import { Text } from "@/src/components/Text/Text";
 import { Button } from "@/src/components/Button/Button";
 import { MediaCard } from "@/src/components/MediaCard/MediaCard";
 import { MediaModal } from "@/src/components/MediaCard/components/MediaModal";
+import { useRevealAnimation } from "@/src/hooks/useRevealAnimation";
 
 interface EventSectionProps {
   event: EventWork;
@@ -20,6 +21,10 @@ export function EventSection({ event }: EventSectionProps) {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const previewMedias: MediaItem[] = event.medias.slice(0, 6);
+
+  useRevealAnimation({
+    selector: ".event-item",
+  });
 
   return (
     <section className="border-b border-dividing-lines py-16 md:py-24">
@@ -40,11 +45,13 @@ export function EventSection({ event }: EventSectionProps) {
 
         <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
           {previewMedias.map((media) => (
-            <MediaCard
+            <div
               key={`${event.slug}-${media.id}`}
-              item={media}
-              onClick={setSelectedMedia}
-            />
+              className="event-item opacity-0 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.03]"
+              style={{ filter: "blur(14px)" }}
+            >
+              <MediaCard item={media} onClick={setSelectedMedia} />
+            </div>
           ))}
         </div>
       </Box>
@@ -77,10 +84,7 @@ export function EventSection({ event }: EventSectionProps) {
         </div>
       )}
 
-      <MediaModal
-        item={selectedMedia}
-        onClose={() => setSelectedMedia(null)}
-      />
+      <MediaModal item={selectedMedia} onClose={() => setSelectedMedia(null)} />
     </section>
   );
 }

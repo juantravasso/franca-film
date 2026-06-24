@@ -2,18 +2,25 @@
 
 import { useState } from "react";
 import { Camera, Play } from "lucide-react";
-
 import { photos, videos } from "@/src/data/media";
 import { MediaItem } from "@/src/types/media";
-
 import { Box } from "@/src/components/Box/Box";
 import { Text } from "@/src/components/Text/Text";
 import { MediaCard } from "@/src/components/MediaCard/MediaCard";
 import { MediaModal } from "@/src/components/MediaCard/components/MediaModal";
 import { Button } from "@/src/components/Button/Button";
+import { useRevealAnimation } from "@/src/hooks/useRevealAnimation";
 
 export function MediaSection() {
   const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
+
+  useRevealAnimation({
+    selector: ".video-home-item",
+  });
+
+  useRevealAnimation({
+    selector: ".photo-home-item",
+  });
 
   return (
     <section className="bg-background">
@@ -38,29 +45,26 @@ export function MediaSection() {
             </Text>
 
             <Button
-            className="mt-5" 
-            title="Ver Todos os Vídeos"
-            href="/VideosPage"
-          />
+              className="mt-5"
+              title="Ver Todos os Vídeos"
+              href="/VideosPage"
+            />
           </div>
-
-          
 
           <div className="grid grid-cols-2 gap-3 md:gap-4">
             {videos.map((video) => (
-              <MediaCard
+              <div
                 key={`video-${video.id}`}
-                item={video}
-                onClick={setSelectedMedia}
-              />
+                className="video-home-item opacity-0 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.03]"
+                style={{ filter: "blur(14px)" }}
+              >
+                <MediaCard item={video} onClick={setSelectedMedia} />
+              </div>
             ))}
           </div>
         </div>
 
-        <div
-          id="fotos"
-          className="px-5 py-16 md:px-10 md:py-20 lg:px-16"
-        >
+        <div id="fotos" className="px-5 py-16 md:px-10 md:py-20 lg:px-16">
           <div className="mb-10 text-center">
             <div className="mb-3 flex items-center justify-center gap-3">
               <Camera size={22} className="text-primary" />
@@ -85,11 +89,13 @@ export function MediaSection() {
 
           <div className="grid grid-cols-2 gap-3 md:gap-4">
             {photos.map((photo) => (
-              <MediaCard
+              <div
                 key={`photo-${photo.id}`}
-                item={photo}
-                onClick={setSelectedMedia}
-              />
+                className="photo-home-item opacity-0 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.03]"
+                style={{ filter: "blur(14px)" }}
+              >
+                <MediaCard item={photo} onClick={setSelectedMedia} />
+              </div>
             ))}
           </div>
         </div>

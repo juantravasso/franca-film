@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+
 import { Header } from "@/src/components/Header/Header";
 import { Box } from "@/src/components/Box/Box";
 import { MediaCard } from "@/src/components/MediaCard/MediaCard";
@@ -8,9 +9,14 @@ import { videos } from "@/src/data/media";
 import { MediaItem } from "@/src/types/media";
 import { MediaModal } from "@/src/components/MediaCard/components/MediaModal";
 import { PortfolioHeader } from "@/src/components/PortifolioHeader/PortifolioHeader";
+import { useRevealAnimation } from "@/src/hooks/useRevealAnimation";
 
 export default function VideosPage() {
   const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
+
+  useRevealAnimation({
+    selector: ".video-page-item",
+  });
 
   return (
     <>
@@ -27,11 +33,13 @@ export default function VideosPage() {
           <Box className="px-5 md:px-10 lg:px-16">
             <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-4 xl:grid-cols-5">
               {videos.map((video) => (
-                <MediaCard
+                <div
                   key={video.id}
-                  item={video}
-                  onClick={setSelectedMedia}
-                />
+                  className="video-page-item opacity-0 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.03]"
+                  style={{ filter: "blur(14px)" }}
+                >
+                  <MediaCard item={video} onClick={setSelectedMedia} />
+                </div>
               ))}
             </div>
           </Box>
